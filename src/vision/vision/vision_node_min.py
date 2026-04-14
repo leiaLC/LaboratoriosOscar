@@ -1,3 +1,4 @@
+#!/home/zuriel_tov/yolo_env/bin/python
 import rclpy
 from rclpy.node import Node
 
@@ -6,6 +7,8 @@ from robotino_interfaces.srv import YoloDetect, FaceRecog, PoseDetect
 
 import cv2
 from cv_bridge import CvBridge
+
+from ultralytics import YOLO
 
 
 class VisionNode(Node):
@@ -40,6 +43,9 @@ class VisionNode(Node):
         cv2.namedWindow('vision', cv2.WINDOW_NORMAL)
         cv2.namedWindow('debug_image', cv2.WINDOW_NORMAL)
 
+        # Load YOLO model
+        self.model = YOLO('yolov8n.pt')
+
         self.get_logger().info("[vision] Keys: q=quit, y=YOLO, f=FACE, p=POSE")
 
     # ======================================
@@ -61,6 +67,19 @@ class VisionNode(Node):
             cv2.destroyAllWindows()
             rclpy.shutdown()
             return
+
+        # YOLO detection
+        if key == ord('y'):
+            results = self.model(cv_image)
+            for result in results:
+                for box in result.boxes:
+                    x1, y1, x2, y2 = box.xyxy[0].cpu().numpy()
+                    conf = box.conf[0].cpu().numpy()
+                    cls = box.cls[0].cpu().numpy()
+                    cv2.rectangle(cv_image, (int(x1), int(y1)), (int(x2), int(y2)), (0,255,0), 2)
+                    label = f"{self.model.names[int(cls)]} {conf:.2f}"
+                    cv2.putText(cv_image, label, (int(x1), int(y1)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
+            cv2.imshow('vision', cv_image)
 
 
     # ======================================
