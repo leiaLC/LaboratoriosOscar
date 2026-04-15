@@ -12,6 +12,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/Talk.srv"
   "srv/SetGrammar.srv"
   "srv/PoseDetect.srv"
+  "msg/PersonTracking.msg"
 
   DEPENDENCIES vision_msgs
 )
