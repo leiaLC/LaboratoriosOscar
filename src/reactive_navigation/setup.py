@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'reactive_navigation_node = reactive_navigation.reactive_navigation_node:main',
+            'person_tracker_node = reactive_navigation.person_tracker:main',
         ],
     },
 )
