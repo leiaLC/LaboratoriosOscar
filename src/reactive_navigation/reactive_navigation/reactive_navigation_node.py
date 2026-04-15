@@ -66,16 +66,16 @@ class ReactiveNavigationNode(Node):
 
             angle = self.latest_scan.angle_min + i * self.latest_scan.angle_increment
 
-            # DERECHA (-120° a -20°)
-            if -2.094 < angle < -0.35:
+            # DERECHA (-120° a -25°)
+            if -2.094 < angle < -0.44:
                 right.append(d)
 
-            # FRENTE (-20° a 20°)
-            elif -0.35 <= angle <= 0.35:
+            # FRENTE (-25° a 25°)
+            elif -0.44 <= angle <= 0.44:
                 front.append(d)
 
-            # IZQUIERDA (20° a 120°)
-            elif 0.35 < angle < 2.094:
+            # IZQUIERDA (25° a 120°)
+            elif 0.44 < angle < 2.094:
                 left.append(d)
 
         left_min = min(left) if left else float('inf')
