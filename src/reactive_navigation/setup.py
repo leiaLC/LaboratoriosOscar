@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             'reactive_navigation_node = reactive_navigation.reactive_navigation_node:main',
             'person_tracker_node = reactive_navigation.person_tracker:main',
+            'person_seeker_node = reactive_navigation.person_seeker_node:main',
         ],
     },
 )
